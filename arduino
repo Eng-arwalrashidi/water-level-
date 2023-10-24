@@ -1,0 +1,33 @@
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2);  
+
+int readPin = A0;
+int readValue;
+
+void setup()
+{
+  lcd.init();                      
+  lcd.backlight();
+  pinMode(readPin, INPUT);
+  Serial.begin(9600);
+}
+void loop()
+{
+  readValue = analogRead(readPin);
+  Serial.println(readValue);
+   lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Water Level: ");
+  lcd.setCursor(0,1);
+  if(readValue < 250){
+    lcd.print("LOW");
+  }else if ( readValue < 450){
+    lcd.print("Meduim");
+  }else if ( readValue < 550){
+    lcd.print("HIGH");
+  
+}
+
+delay(1000);
+}
